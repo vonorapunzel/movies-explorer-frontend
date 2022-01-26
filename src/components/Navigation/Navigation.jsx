@@ -6,8 +6,8 @@ const Navigation = () => {
   return(
     <>
       <BurgerMenu />
-      <nav className="header__nav">
-        <ul className="header__list">
+      <nav className="header__navigation">
+        <ul className="header__list-navigation">
           <li className="header__item"><Link to="/movies" className="header__link nav__link_active">Фильмы</Link></li>
           <li className="header__item"><Link to="/saved-movies" className="header__link header__link_margin_left">Сохраненные фильмы</Link></li>
         </ul>
