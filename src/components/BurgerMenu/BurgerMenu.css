@@ -1,0 +1,125 @@
+.header__burger-menu {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .header__burger-menu {
+    display: block;
+  }
+
+  .header__menu-btn{
+    right: 34px;
+    top: 36px;
+    position: absolute;
+    width: 28px;
+    height: 26px;
+    cursor: pointer;
+    z-index: 1;
+  }
+   
+  .header__menu-btn > span,
+  .header__menu-btn > span::before,
+  .header__menu-btn > span::after {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background-color: #FFF;
+    transition-duration: .25s;
+  }
+  .header__menu-btn > span::before {
+    content: '';
+    top: -7px;
+  }
+  .header__menu-btn > span::after {
+    content: '';
+    top: 7px;
+  }
+
+  .header__menubox {
+    display: block;
+    position: fixed;
+    visibility: hidden;
+    top: 0;
+    right: -100%;
+    max-width: 520px;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 80px 0;
+    list-style: none;
+    background-color: #202020;
+    box-shadow: 1px 0px 6px rgba(0, 0, 0, .2);
+    transition-duration: .25s;
+  }
+
+  .header__menu-link {
+    display: block;
+    padding: 12px 24px;
+    color: #FFF;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 500;
+    text-align: center;
+    padding-bottom: 2px;
+    text-decoration: none;
+    transition-duration: .25s;
+  }
+
+  .header__menu-link:hover {
+    border-bottom: 2px solid #FFF;
+  }
+
+  .header__menu-link_notborder:hover {
+    border-bottom: none;
+  }
+
+  #menu-toggle{
+    opacity: 0;
+  }
+
+  #menu-toggle:checked ~ .header__menu-btn > span{
+    transform: rotate(45deg);
+  }
+  #menu-toggle:checked ~ .header__menu-btn > span::before{
+    top: 0;
+    transform: rotate(0);
+  }
+  #menu-toggle:checked ~ .header__menu-btn > span::after{
+    top: 0;
+    transform: rotate(90deg);
+  }
+  #menu-toggle:checked ~ .header__menubox{
+    visibility: visible;
+    right: 0;
+  }
+
+  .header__button-account {
+    margin-top: 621px;
+    width: 100px;
+    height: 32px;
+    background-color: #313131;
+    border: none;
+    border-radius: 20px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-size: 14px;
+    line-height: 16px;
+    color: #FFF;
+    cursor: pointer;
+    transition: all .3s ease-out;
+  }
+  
+  .header__button-account:hover {
+    opacity: .6;
+    transition: all .3s ease-out;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .header__button-account {
+    margin-top: 444px;
+  }
+  
+}

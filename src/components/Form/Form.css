@@ -1,0 +1,119 @@
+.entrance {
+  display: flex;
+  justify-content: center;
+}
+
+.entrance-form {
+  font-family: 'Inter', Arial, sans-serif;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  padding: 60px 0 80px;
+  width: 100%;
+  max-width: 358px;
+}
+
+.entrance-form__title {
+  margin: 40px 0 40px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: #FFF;
+}
+
+.entrance-form__subtitle {
+  margin: 0;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #8B8B8B;
+}
+
+.entrance-form__subtitle_hidden {
+  display: none;
+}
+
+.entrance-form__question {
+  text-align: center;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #8B8B8B;
+  margin: 0;
+  padding: 0;
+}
+
+.entrance-form__input {
+  background-color: #202020;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #FFF;
+  border: none;
+  border-bottom: 1px solid #424242;
+  padding: 5px 0 10px 0;
+  width: 100%;
+}
+
+.entrance-form__input_margin {
+  margin-bottom: 24px;
+}
+
+.entrance-form__input_hidden {
+  display: none;
+}
+
+.entrance-form__input:focus  {
+  outline: none;
+}
+
+.entrance-form__input:-webkit-autofill
+{
+  -webkit-box-shadow: 0 0 0 30px #000 inset;
+  -webkit-text-fill-color: #fff;
+}
+
+.entrance-form__enter {
+  list-style: none;
+  text-decoration: none;
+  color: #4285F4;
+  transition: all .3s ease-out;
+}
+
+.entrance-form__enter:hover {
+  opacity: .6;
+  transition: all .3s ease-out;
+}
+
+.entrance-form__button-submit {
+  margin: 150px 0 16px;
+  padding: 0;
+  max-width: 396px;
+  width: 100%;
+  min-height: 45px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #FFF;
+  background-color: #4285F4;
+  border: none;
+  border-radius: 3px;
+  transition: all .3s ease-out;
+}
+
+.entrance-form__button-submit:hover {
+  opacity: .6;
+  cursor: pointer;
+  transition: all .3s ease-out;
+}

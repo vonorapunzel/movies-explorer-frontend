@@ -1,0 +1,28 @@
+.title__head {
+  margin: 0 70px;
+  padding-top: 110px;
+  padding-bottom: 23px;
+  max-width: 1140px;
+  font-weight: normal;
+  font-size: 22px;
+  line-height: 27px;
+  letter-spacing: -0.04em;
+  color: #FFF;
+  border-bottom: 1px solid #DADADA;
+}
+
+@media screen and (max-width: 768px) {
+  .title__head {
+    padding-top: 90px;
+    margin: 0 50px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .title__head {
+    padding-top: 70px;
+    margin: 0 18px;
+    font-size: 18px;
+    line-height: 22px;
+  } 
+}
