@@ -53,10 +53,6 @@
   .movies-card-list__load {
     padding-top: 50px;
   }
-
-  .movies-card-list__button {
-    margin: 0 30px;
-  }
 }
 
 @media screen and (max-width: 425px) {

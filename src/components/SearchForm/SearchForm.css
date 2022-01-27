@@ -13,8 +13,7 @@
   max-width: 932px;
   width: 100%;
   height: 48px;
-  border: 1.5px solid rgba(170, 170, 170, .2);;
-  
+  border: 1.5px solid rgba(170, 170, 170, .2);
   border-radius: 50px;
   display: flex;
   justify-content: space-around;
@@ -35,6 +34,10 @@
   background-color: #202020;
   color: #FFF;
   margin-left: 22px;
+}
+
+.searchForm__input:focus {
+  border: 1px solid red;
 }
 
 .searchForm__input::placeholder {

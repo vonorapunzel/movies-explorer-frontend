@@ -6,7 +6,7 @@ const SearchForm = () => {
     <section className="searchForm">
       <article className="searchForm__container">
         <div className="searchForm__inputSearch">
-          <input className="searchForm__input" type="text" placeholder="Фильм" />
+          <input className="searchForm__input" type="text" required placeholder="Фильм" />
           <input className="searchForm__input-button" alt="кнопка поиска" type="image" src={find} />
         </div>
         <div className="searchForm__filter">

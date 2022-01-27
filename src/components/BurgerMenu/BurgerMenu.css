@@ -14,7 +14,7 @@
     width: 28px;
     height: 26px;
     cursor: pointer;
-    z-index: 1;
+    z-index: 2;
   }
    
   .header__menu-btn > span,
@@ -51,6 +51,7 @@
     background-color: #202020;
     box-shadow: 1px 0px 6px rgba(0, 0, 0, .2);
     transition-duration: .25s;
+    z-index: 1;
   }
 
   .header__menu-link {
@@ -96,7 +97,7 @@
   }
 
   .header__button-account {
-    margin-top: 621px;
+    margin-top: 290px;
     width: 100px;
     height: 32px;
     background-color: #313131;
@@ -115,11 +116,4 @@
     opacity: .6;
     transition: all .3s ease-out;
   }
-}
-
-@media screen and (max-width: 425px) {
-  .header__button-account {
-    margin-top: 444px;
-  }
-  
 }

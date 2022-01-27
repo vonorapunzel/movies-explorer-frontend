@@ -117,3 +117,22 @@
   cursor: pointer;
   transition: all .3s ease-out;
 }
+
+@media screen and (max-width: 425px) {
+  .entrance {
+    padding: 0 30px;
+  }
+  
+  .entrance-form__logo {
+    text-align: center;
+  }
+
+  .entrance-form__title {
+    text-align: center;
+  }
+
+  .entrance-form__question {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

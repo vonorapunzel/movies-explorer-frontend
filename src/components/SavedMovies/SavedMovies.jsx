@@ -6,7 +6,7 @@ const SavedMovies = () => {
   return(
     <>
       <SearchForm />
-      <MoviesCardList />
+      <MoviesCardList saved={true}/>
     </>
   )
 };

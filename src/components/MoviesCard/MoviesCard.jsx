@@ -1,9 +1,10 @@
 import "./MoviesCard.css";
 
-const MoviesCard = ({ type, button, img, title, time }) => {
+const MoviesCard = ({ children, img, title, time }) => {
+
   return(
     <div className="movies-card">
-      <button className={type}>{button}</button>
+      {children}
       <img className="movies-card__img" alt="постер" src={img}/>
       <div className="movies-card__container">
         <h3 className="movies-card__title">{title}</h3>
