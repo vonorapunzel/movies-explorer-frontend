@@ -1,0 +1,28 @@
+.movies-card-list__button {
+  max-width: 1140px;
+  margin: 0 70px;
+  width: 100%;
+  border: none;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: #FFF;
+  height: 36px;
+  border-radius: 6px;
+  background-color: #2F2F2F;
+  cursor: pointer;
+  transition: all .3s ease-out;
+}
+
+.movies-card-list__button:hover {
+  opacity: .6;
+  transition: all .3s ease-out;
+}
+
+@media screen and (max-width: 768px) {
+  .movies-card-list__button {
+    margin: 0 30px;
+  }
+}

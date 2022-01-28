@@ -1,0 +1,27 @@
+.button-movies {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 72px;
+  height: 21px;
+  border: none;
+  background-color: #313131;
+  border-radius: 30px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 9px;
+  color: #FFF;
+  cursor: pointer;
+  transition: all .3s ease-out;
+}
+
+.button-movies:hover {
+  background-color: #4285F4;
+  transition: all .3s ease-out;
+}
+
+.button-movies:focus {
+  outline: none;
+}
