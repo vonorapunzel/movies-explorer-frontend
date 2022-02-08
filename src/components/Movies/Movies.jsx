@@ -3,11 +3,12 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import MoreMovies from "../MoreMovies/MoreMovies";
 
-const Movies = () => {
+const Movies = ({ movies }) => {
+  
   return(
     <>
       <SearchForm />
-      <MoviesCardList />
+      <MoviesCardList movies={movies} />
       <MoreMovies />
     </>
   )
