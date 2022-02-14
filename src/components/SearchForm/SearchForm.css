@@ -36,10 +36,6 @@
   margin-left: 22px;
 }
 
-.searchForm__input:focus {
-  border: 1px solid red;
-}
-
 .searchForm__input::placeholder {
   font-size: 14px;
   line-height: 18px;
@@ -83,7 +79,6 @@
   display: inline-block;
   width: 34px;
   height: 14px;
-  z-index: -1;
 }
 
 .searchForm__checkbox {display:none;}

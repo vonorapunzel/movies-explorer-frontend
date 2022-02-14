@@ -5,33 +5,38 @@ import ButtonMovies from '../ButtonMovies/ButtonMovies';
 import ButtonDeleteMovie from "../ButtonDeleteMovie/ButtonDeleteMovie";
 import durationFormatter from '../Duration/Duration';
 
-const MoviesCard = ({ movie }) => {
-  const location = useLocation();
-  const [isAdded, setIsAdded] = useState(false);
+const MoviesCard = ({ savedMovies, movie, onActionClick, isMovieAdded }) => {
+  
+  const {
+    nameRU, duration, trailer, image, 
+  } = movie;
+  
+  const isAdded = isMovieAdded(movie);
 
-  const handleLikeMovie = () => {
-    setIsAdded(true);
+  const handleLikeMovie = (e) => {
+    
+    onActionClick(movie, !isAdded);
   }
 
   const handleDeleteMovie = () => {
-
+    onActionClick(movie, false);
   } 
 
   return(
-    <li className="movies-card-list__item">
       <div className="movies-card">
-        {location.pathname === '/movies'
-          ? <ButtonMovies onClick={handleLikeMovie} isAdded={isAdded}/>
-          : <ButtonDeleteMovie onClick={handleDeleteMovie}/>}
-        <img className="movies-card__img" alt="постер" src={`https://api.nomoreparties.co/${movie.image.url}`}/>
+        {savedMovies
+          ? <ButtonDeleteMovie onClick={handleDeleteMovie} />
+          : <ButtonMovies onClick={handleLikeMovie} isAdded={isAdded} />}
+          <a className="movie-card__link" href={trailer} target="_blank" rel="noopener noreferrer">
+        <img className="movies-card__img" alt="постер" src={image}/>
+        </a>
         <div className="movies-card__container">
-          <h3 className="movies-card__title">{movie.nameRU}</h3>
+          <h3 className="movies-card__title">{nameRU}</h3>
           <div className="movies-card__container-time">
-            <p className="movies-card__time">{durationFormatter(movie.duration)}</p>
+            <p className="movies-card__time">{durationFormatter(duration)}</p>
           </div>
         </div>
       </div>
-    </li>
   )
 };
 
