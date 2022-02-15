@@ -60,23 +60,52 @@
    outline: none;
 }
 
+.profile__form-error {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: inline;
+  margin: 0;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #EE3465;
+}
+
+.profile__form-sbmt-success {
+  color: #2BE080;
+}
+
+.profile__form-sbmt-failed {
+  color: #EE3465;
+}
+
 .profile__form-submit {
   max-width: 106px;
   margin-top: 220px;
   font-size: 13px;
   font-weight: 400;
-  line-height: 16px;
+  line-height: 1.23;
   border: none;
   background-color: #202020;
-  color: #FFF;
-  cursor: pointer;
-  transition: all .3s ease-out;
+  color: #000;
+  transition: opacity .3s ease-in-out;
+  opacity: 1;
 }
 
 .profile__form-submit:hover {
   opacity: .6;
   transition: all .3s ease-out;
   outline: none;
+}
+
+.profile__form-submit_is-active {
+  color: #FFF;
+}
+
+.profile__form-submit_is-active:hover {
+  cursor: pointer;
+  opacity: .6;
 }
 
 .profile__button-logout {

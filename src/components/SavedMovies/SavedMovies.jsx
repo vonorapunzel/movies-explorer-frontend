@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import "./SavedMovies.css";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
+import Preloader from "../Preloader/Preloader";
 
-const SavedMovies = ({ savedMovies, movies, onActionClick, isMovieAdded }) => {
+const SavedMovies = ({ savedMovies, movies, isLoading, loadingError, onActionClick, isMovieAdded }) => {
   const [filterIsOn, setFilterIsOn] = useState(false);
 
   const filterShortFilm = (moviesToFilter) => moviesToFilter.filter((item) => item.duration < 40);
@@ -32,10 +33,22 @@ const SavedMovies = ({ savedMovies, movies, onActionClick, isMovieAdded }) => {
   return(
     <>
       <SearchForm onFilterClick={onFilterClick} onSearch={searchInSavedHandler} />
+      {isLoading && <Preloader />}
+
+      {!isLoading
+      && loadingError === ''
+      && (
       <MoviesCardList savedMovies={savedMovies}
           movies={filterIsOn ? filterShortFilm(moviesToRender) : moviesToRender}
           onActionClick={onActionClick}
           isMovieAdded={isMovieAdded} />
+      )}
+
+      {
+        !isLoading
+        && loadingError !== ''
+        && <div className="movies__error">{loadingError}</div>
+      }
     </>
   )
 };

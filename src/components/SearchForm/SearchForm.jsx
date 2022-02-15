@@ -1,25 +1,45 @@
 import "./SearchForm.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import find from "../../images/find.svg";
+import useFormWithValidation from '../../hooks/formValidation';
 
-const SearchForm = ({ onSearch, onFilterClick }) => {
-  const [searchText, setSearchText] = useState('')
- 
+const SearchForm = ({ onSearch, onFilterClick, isLoading }) => {
+  const formWithValidation = useFormWithValidation();
+  const { searchText } = formWithValidation.values;
+  const { handleChange, resetForm } = formWithValidation;
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    resetForm();
+  }, [resetForm]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch(searchText);
-  }
+    if (!searchText) {
+      setError('Нужно ввести ключевое слово');
+      setTimeout(() => {
+        setError('');
+      }, 2000);
+    } else {
+      onSearch(searchText);
+      resetForm();
+    }
+  };
 
-  const handleChange = (e) => {
-    setSearchText(e.target.value);
-  }
 
   return(
     <section className="searchForm">
       <form className="searchForm__container" onSubmit={handleSubmit}>
         <div className="searchForm__inputSearch">
-          <input className="searchForm__input" value={searchText}
-          onChange={handleChange} type="text" required placeholder="Фильм" />
+          <input className="searchForm__input" name="searchText"
+          type="text"
+          placeholder="Фильм"
+          required
+          value={searchText || ''}
+          onChange={handleChange}
+          autoComplete="off"
+          disabled={isLoading} />
+          {error && <span className="search-form__error">{error}</span>}
           <input className="searchForm__input-button" alt="кнопка поиска" type="image" src={find} />
         </div>
         <div className="searchForm__filter">

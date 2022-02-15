@@ -147,6 +147,17 @@
   }
 }
 
+.search-form__error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.28;
+  color: #EE3465;
+}
+
 @media screen and (max-width: 425px) {
   .searchForm__container {
     margin: 0 10px;
