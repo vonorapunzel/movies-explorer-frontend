@@ -20,6 +20,7 @@
 
 .entrance-form__subtitle {
   margin: 0;
+  margin-bottom: 24px;
   font-family: Inter;
   font-style: normal;
   font-weight: normal;
@@ -54,7 +55,7 @@
 }
 
 .entrance-form__input_margin {
-  margin-bottom: 24px;
+  margin-bottom: 0px;
 }
 
 .entrance-form__input_hidden {
@@ -63,6 +64,24 @@
 
 .entrance-form__input:focus  {
   outline: none;
+}
+
+.entrance-form__input_has_error {
+  color: #EE3465;
+}
+
+.entrance-form__input_is_error {
+  color: #EE3465;
+}
+
+.entrance-form__error {
+  display: inline;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #EE3465;
 }
 
 .entrance-form__input:-webkit-autofill
@@ -87,6 +106,10 @@
   border: none;
   border-radius: 3px;
   transition: all .3s ease-out;
+}
+
+.entrance-form__button-submit_error {
+  opacity: .6;
 }
 
 .entrance-form__button-submit:hover {

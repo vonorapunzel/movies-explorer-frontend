@@ -4,7 +4,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Preloader from '../Preloader/Preloader';
 
-const Movies = ({ savedMovies, movies, onSubmitSearch, isLoading, loadingError, onActionClick, isMovieAdded }) => {
+const Movies = ({ savedMovies, movies, onSubmitSearch, isLoading, checked, filterBox, loadingError, onActionClick, isMovieAdded }) => {
   const [filterIsOn, setFilterIsOn] = useState(false);
 
   const filterShortFilm = (moviesToFilter) => moviesToFilter.filter((item) => item.duration < 40);
@@ -16,7 +16,7 @@ const Movies = ({ savedMovies, movies, onSubmitSearch, isLoading, loadingError, 
 
   return(
     <>
-      <SearchForm onFilterClick={onFilterClick} onSearch={onSubmitSearch} isLoading={isLoading}/>
+      <SearchForm onFilterClick={onFilterClick} onSearch={onSubmitSearch} checked={checked} filterBox={filterBox} isLoading={isLoading}/>
       {isLoading && <Preloader />}
 
       {!isLoading && loadingError === '' && (

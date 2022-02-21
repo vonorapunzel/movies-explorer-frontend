@@ -14,7 +14,6 @@ const MoviesCard = ({ savedMovies, movie, onActionClick, isMovieAdded }) => {
   const isAdded = isMovieAdded(movie);
 
   const handleLikeMovie = (e) => {
-    
     onActionClick(movie, !isAdded);
   }
 

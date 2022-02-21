@@ -1,30 +1,24 @@
 import "./SearchForm.css";
 import { useState, useEffect } from "react";
 import find from "../../images/find.svg";
-import useFormWithValidation from '../../hooks/formValidation';
 
-const SearchForm = ({ onSearch, onFilterClick, isLoading }) => {
-  const formWithValidation = useFormWithValidation();
-  const { searchText } = formWithValidation.values;
-  const { handleChange, resetForm } = formWithValidation;
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    resetForm();
-  }, [resetForm]);
+const SearchForm = ({ onSearch, onFilterClick, filterBox, checked, isLoading }) => {
+  const [searchText, setSearchText] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!searchText) {
-      setError('Нужно ввести ключевое слово');
-      setTimeout(() => {
-        setError('');
-      }, 2000);
-    } else {
-      onSearch(searchText);
-      resetForm();
-    }
+    onSearch(searchText);
+    localStorage.setItem('searchText', searchText);
   };
+
+  const enterWord = (e) => {
+    setSearchText(e.target.value);
+  }
+
+  useEffect(() => {
+    const text = localStorage.getItem('searchText');
+    if(text) setSearchText(text);
+  }, []);
 
 
   return(
@@ -34,18 +28,16 @@ const SearchForm = ({ onSearch, onFilterClick, isLoading }) => {
           <input className="searchForm__input" name="searchText"
           type="text"
           placeholder="Фильм"
-          required
-          value={searchText || ''}
-          onChange={handleChange}
+          value={searchText}
+          onChange={enterWord}
           autoComplete="off"
           disabled={isLoading} />
-          {error && <span className="search-form__error">{error}</span>}
           <input className="searchForm__input-button" alt="кнопка поиска" type="image" src={find} />
         </div>
         <div className="searchForm__filter">
         <p className="searchForm__subtitle">Короткометражки</p>
         <label className="searchForm__switch">
-          <input className="searchForm__checkbox" type="checkbox" onClick={onFilterClick} />
+          <input className="searchForm__checkbox" type="checkbox" onClick={onFilterClick} onChange={filterBox} checked={checked} />
           <span className="searchForm__slider"></span>
         </label>
         </div>

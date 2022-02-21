@@ -44,8 +44,8 @@ class MainApi {
       .then((res) => this._getResponseData(res))
   }
 
-  deleteMovies(id) {
-    return fetch(`${this._url}/movies/${id}`, {
+  deleteMovies(movieId) {
+    return fetch(`${this._url}/movies/${movieId}`, {
       method: 'DELETE',
       credentials: 'include',
       headers: this._headers,
@@ -100,8 +100,8 @@ class MainApi {
       headers: this._headers,
       credentials: 'include',
     })
-      .then((res) => this._getResponseData(res))
-      .then(data => data)
+      .then((res) => {
+        this._getResponseData(res)})
   }
 }
 const mainApi = new MainApi({

@@ -4,7 +4,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Preloader from "../Preloader/Preloader";
 
-const SavedMovies = ({ savedMovies, movies, isLoading, loadingError, onActionClick, isMovieAdded }) => {
+const SavedMovies = ({ savedMovies, movies, isLoading, loadingError, checked, onSubmitSearch, filterBox, onActionClick, isMovieAdded }) => {
   const [filterIsOn, setFilterIsOn] = useState(false);
 
   const filterShortFilm = (moviesToFilter) => moviesToFilter.filter((item) => item.duration < 40);
@@ -19,20 +19,9 @@ const SavedMovies = ({ savedMovies, movies, isLoading, loadingError, onActionCli
     setMoviesToRender(movies);
   }, [movies]);
 
-  const searchFilter = (data, searchQuery) => {
-    if (searchQuery) {
-      const regex = new RegExp(searchQuery, 'gi');
-      return data.filter((item) => regex.test(item.nameRU) || regex.test(item.nameEN));
-    }
-    return [];
-  };
-
-  const searchInSavedHandler = (searchQuery) => {
-    setMoviesToRender(searchFilter(movies, searchQuery));
-  };
   return(
     <>
-      <SearchForm onFilterClick={onFilterClick} onSearch={searchInSavedHandler} />
+      <SearchForm onFilterClick={onFilterClick} onSearch={onSubmitSearch} checked={checked} filterBox={filterBox} />
       {isLoading && <Preloader />}
 
       {!isLoading

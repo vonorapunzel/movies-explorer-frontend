@@ -1,30 +1,16 @@
 import "./Register.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import logo from '../../images/logo.svg';
 import { Link } from "react-router-dom";
+import useFormWithValidation from "../../hooks/formValidation";
 
-
-const Register = ({ signUpHandler }) => {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
+const Register = ({ signUpHandler, isSignUpError }) => {
+  const formWithValidation = useFormWithValidation();
+  const { handleChange, errors, values, isValid} = formWithValidation;
   const submitHandler = (e) => {
     e.preventDefault();
-    signUpHandler(name, email, password);
+    signUpHandler(values.name, values.email, values.password);
   };
-
-  const handleChangeName = (e) => {
-    setName(e.target.value);
-  }
-
-  const handleChangeEmail = (e) => {
-    setEmail(e.target.value);
-  }
-
-  const handleChangePassword = (e) => {
-    setPassword(e.target.value);
-  }
 
   return (
     <div className="entrance">
@@ -34,15 +20,19 @@ const Register = ({ signUpHandler }) => {
       </div>
         <form className="entrance-form" autoComplete="off" onSubmit={submitHandler}>
           <label className="entrance-form__subtitle">Имя
-            <input className='entrance-form__input entrance-form__input_margin' onChange={handleChangeName} value={ name} required maxLength={30} minLength={2} name="name" placeholder="Имя" type="text"/>
+            <input className={`entrance-form__input ${errors.name && 'entrance-form__input_has_error'} entrance-form__input_margin`} onChange={handleChange} value={ values.name} required maxLength={30} minLength={2} name="name" placeholder="Имя" type="text"/>
+            <span className="entrance-form__error">{errors.name}</span>
           </label>
           <label className="entrance-form__subtitle">E-mail
-            <input className="entrance-form__input entrance-form__input_margin" onChange={handleChangeEmail} value={email} required name="email" placeholder="Email" type="email"/>
+            <input className={`entrance-form__input ${errors.email && 'entrance-form__input_has_error'} entrance-form__input_margin`} onChange={handleChange} value={values.email} required name="email" placeholder="Email" type="email"/>
+            <span className="entrance-form__error">{errors.email}</span>
           </label>
           <label className="entrance-form__subtitle">Пароль
-            <input className="entrance-form__input" name="password" onChange={handleChangePassword} value={password} required minLength={8} placeholder="Пароль" type="password"/>
+            <input className={`entrance-form__input ${errors.password && 'entrance-form__input_has_error'}`} name="password" onChange={handleChange} value={values.password} required minLength={8} placeholder="Пароль" type="password"/>
+            <span className="entrance-form__error">{errors.password}</span>
           </label>
-          <button className="entrance-form__button-submit" type="submit">Регистрация</button>
+          <button className={`entrance-form__button-submit ${ !isValid && 'entrance-form__button-submit_error'}`} type="submit"  disabled={!isValid && true}>Регистрация</button>
+          {isSignUpError && <span className="entrance-form__error">Ошибка при регистрации</span>}
         </form> 
       <p className='entrance-form__question'>Уже зарегистрированы?<Link to='/signin' className="entrance-form__enter">Войти</Link></p>
     </div>
