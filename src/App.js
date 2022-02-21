@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Main from "./components/Main/Main";
@@ -22,16 +22,16 @@ function App() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
-  const [filterMovies, setFilterMovies] = useState([]);
+  const [setFilterMovies] = useState([]);
   const [editIsSuccess, setEditIsSuccess] = useState(false);
   const [editIsFailed, setEditIsFailed] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [loadingError, setLoadingError] = useState('');
-  const [filterSavedMovies, setFilterSavedMovies] = useState([]);
+  const [setFilterSavedMovies] = useState([]);
   const [isSignUpError, setIsSignUpError] = useState(false);
-  const [query, setQuery] = useState('');
   const [checked, setChecked] = useState(false);
   const [checkedSave, setCheckedSave] = useState(false);
+
 
   const getUser = () => {
     mainApi
@@ -59,6 +59,8 @@ function App() {
     mainApi
       .authorize(email, password)
       .then(() => {
+        getAllMovies();
+        getSavedMovies();
         setLoggedIn(true);
         history.push('/movies');
       })
