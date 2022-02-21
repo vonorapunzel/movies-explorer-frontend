@@ -59,8 +59,6 @@ function App() {
     mainApi
       .authorize(email, password)
       .then(() => {
-        getAllMovies();
-        getSavedMovies();
         setLoggedIn(true);
         history.push('/movies');
       })
@@ -159,7 +157,14 @@ function App() {
   }
 
   useEffect(() => {
-    const moviesArr = JSON.parse(localStorage.getItem('filterData'));
+    if (loggedIn) {
+      getAllMovies();
+      getSavedMovies();
+    }
+  }, [loggedIn])
+
+  useEffect(() => {
+    const moviesArr = JSON.parse(localStorage.getItem('movies'));
     if (moviesArr) {
       setMovies(moviesArr);
     } else {
