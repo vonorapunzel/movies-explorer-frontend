@@ -32,7 +32,6 @@ function App() {
   const [checked, setChecked] = useState(false);
   const [checkedSave, setCheckedSave] = useState(false);
 
-
   const getUser = () => {
     mainApi
       .getUserInfo()
@@ -59,6 +58,8 @@ function App() {
     mainApi
       .authorize(email, password)
       .then(() => {
+        getAllMovies();
+        getSavedMovies();
         setLoggedIn(true);
         history.push('/movies');
       })
@@ -157,37 +158,29 @@ function App() {
   }
 
   useEffect(() => {
-    if (loggedIn) {
-      getAllMovies();
-      getSavedMovies();
-    }
-  }, [loggedIn])
-
-  useEffect(() => {
-    const moviesArr = JSON.parse(localStorage.getItem('movies'));
+    const moviesArr = JSON.parse(localStorage.getItem('filterData'));
     if (moviesArr) {
       setMovies(moviesArr);
     } else {
       getAllMovies()
     }
 
-    const saved = JSON.parse(localStorage.getItem('savedMovies'));
+    const saved = JSON.parse(localStorage.getItem('filterDataSave'));
     if (saved) {
       setSavedMovies(saved);
     } else {
       getSavedMovies();
     }
-  }, []);
+  }, [history]);
 
   const filterCheckBox = (e) => {
     if(!checked) {
       const filterShortFilm = movies.filter((item) => item.duration < 40);
       setChecked(true);
       setMovies(filterShortFilm);
-      localStorage.setItem('checkbox', checked);
     } else {
       setChecked(false);
-      const moviesArr = JSON.parse(localStorage.getItem('movies'));
+      const moviesArr = JSON.parse(localStorage.getItem('filterData'));
       setMovies(moviesArr); 
     }
   };
@@ -197,10 +190,9 @@ function App() {
       const filterShortFilm = savedMovies.filter((item) => item.duration < 40);
       setCheckedSave(true);
       setSavedMovies(filterShortFilm);
-      localStorage.setItem('checkboxSave', checkedSave);
     } else {
       setCheckedSave(false);
-      const moviesArr = JSON.parse(localStorage.getItem('savedMovies'));
+      const moviesArr = JSON.parse(localStorage.getItem('filterDataSave'));
       setSavedMovies(moviesArr); 
     }
   };
@@ -242,7 +234,7 @@ function App() {
 
   const searchHandlerSave = (searchQuery) => {
     if (searchQuery === '') {
-      console.log(searchQuery)
+      localStorage.removeItem('filterDataSave');
       const moviesArr = JSON.parse(localStorage.getItem('savedMovies'));
       setSavedMovies(moviesArr);
     } else {
@@ -252,6 +244,7 @@ function App() {
 
   const searchHandler = (searchQuery) => {
     if (searchQuery === '') {
+      localStorage.removeItem('filterData')
       const moviesArr = JSON.parse(localStorage.getItem('movies'));
       setMovies(moviesArr);
     } else {
@@ -263,7 +256,6 @@ function App() {
     mainApi
       .saveMovies(movie)
       .then((res) => {
-        console.log(res)
         setSavedMovies([...savedMovies, { ...res, id: res.movieId }]);
       })
       .catch((err) => {

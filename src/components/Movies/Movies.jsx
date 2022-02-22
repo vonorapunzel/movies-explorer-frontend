@@ -7,8 +7,6 @@ import Preloader from '../Preloader/Preloader';
 const Movies = ({ savedMovies, movies, onSubmitSearch, isLoading, checked, filterBox, loadingError, onActionClick, isMovieAdded }) => {
   const [filterIsOn, setFilterIsOn] = useState(false);
 
-  const filterShortFilm = (moviesToFilter) => moviesToFilter.filter((item) => item.duration < 40);
-
   const onFilterClick = () => {
     setFilterIsOn(!filterIsOn);
   };
@@ -20,7 +18,7 @@ const Movies = ({ savedMovies, movies, onSubmitSearch, isLoading, checked, filte
       {isLoading && <Preloader />}
 
       {!isLoading && loadingError === '' && (
-      <MoviesCardList savedMovies={savedMovies} movies={filterIsOn ? filterShortFilm(movies) : movies} onActionClick={onActionClick} isMovieAdded={isMovieAdded}/>
+      <MoviesCardList savedMovies={savedMovies} movies={movies} onActionClick={onActionClick} isMovieAdded={isMovieAdded}/>
       )}
       {
         !isLoading
