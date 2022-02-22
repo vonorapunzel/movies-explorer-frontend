@@ -38,15 +38,10 @@ function App() {
       .then((res) => {
         setLoggedIn(true);
         setCurrentUser(res);
-        if (location.pathname === '/signin' || location.pathname === '/signup') {
-          history.push('/movies');
-        } else {
-          history.push(location.pathname);
-        }
+        history.push('/movies');
       })
       .catch((e) => {
         console.log(e);
-        history.push('/');
       });
   };
 
@@ -326,7 +321,7 @@ function App() {
         <ProtectedRoute path="/saved-movies" checked={checkedSave} filterBox={filterCheckBoxSave} onSubmitSearch={searchHandlerSave} isLoading={isLoading} loadingError={loadingError} savedMovies onActionClick={actionHandler} isMovieAdded={isMovieAdded} component={SavedMovies} loggedIn={loggedIn} movies={savedMovies}/>
         <ProtectedRoute path="/profile" editIsSuccess={editIsSuccess}
               editIsFailed={editIsFailed} loadingError={loadingError} component={Profile} loggedIn={loggedIn} onSignOut={signOutHandler} onUpdate={userUpdateHandler} />
-        <Route component={NotFound} />
+        <Route path="*" component={NotFound} />
       </Switch>
       <Route exact path={["/movies", "/saved-movies", "/"]}>
         <Footer />
