@@ -158,17 +158,26 @@ function App() {
   }
 
   useEffect(() => {
+    const checkboxMovie = JSON.parse(localStorage.getItem('checkboxMovie'))
     const moviesArr = JSON.parse(localStorage.getItem('filterData'));
     if (moviesArr) {
       setMovies(moviesArr);
     } 
-    else {
+    if (checkboxMovie) {
+      setChecked(true);
+      setMovies(checkboxMovie)
+    } else {
       getAllMovies()
     }
 
+    const checkboxMovieSave = JSON.parse(localStorage.getItem('checkboxMovieSave'))
     const saved = JSON.parse(localStorage.getItem('filterDataSave'));
     if (saved) {
       setSavedMovies(saved);
+    } 
+    if (checkboxMovieSave) {
+      setCheckedSave(true)
+      setSavedMovies(checkboxMovieSave);
     } else {
       getSavedMovies();
     }
@@ -178,9 +187,11 @@ function App() {
     if(!checked) {
       const filterShortFilm = movies.filter((item) => item.duration < 40);
       setChecked(true);
+      localStorage.setItem('checkboxMovie', JSON.stringify(filterShortFilm));
       setMovies(filterShortFilm);
     } else {
       setChecked(false);
+      localStorage.removeItem('checkboxMovie')
       const moviesArr = JSON.parse(localStorage.getItem('filterData'));
       const movieArrAll = JSON.parse(localStorage.getItem('movies'));
       if (moviesArr === null) {
@@ -195,9 +206,11 @@ function App() {
     if(!checkedSave) {
       const filterShortFilm = savedMovies.filter((item) => item.duration < 40);
       setCheckedSave(true);
+      localStorage.setItem('checkboxMovieSave', JSON.stringify(filterShortFilm));
       setSavedMovies(filterShortFilm);
     } else {
       setCheckedSave(false);
+      localStorage.removeItem('checkboxMovieSave')
       const moviesArr = JSON.parse(localStorage.getItem('filterDataSave'));
       const movieArrAll = JSON.parse(localStorage.getItem('savedMovies'));
       if (moviesArr === null) {
@@ -223,7 +236,8 @@ function App() {
       localStorage.setItem('filterData', JSON.stringify(filterData));
       setMovies(filterData);
     } else {
-      localStorage.removeItem('filterData')
+      const movieArrAll = JSON.parse(localStorage.getItem('movies'));
+      setMovies(movieArrAll)
     }
   };
 
@@ -239,7 +253,8 @@ function App() {
       localStorage.setItem('filterDataSave', JSON.stringify(filterData));
       setSavedMovies(filterData);
     } else {
-      localStorage.removeItem('filterDataSave')
+      const movieArrAll = JSON.parse(localStorage.getItem('savedMovies'));
+      setSavedMovies(movieArrAll)
     }
   };
 
@@ -275,6 +290,7 @@ function App() {
   };
 
   const removeMovie = (movie) => {
+    console.log(movie)
     const movieId = savedMovies.find((item) => item.id === movie.id)._id;
     mainApi
       .deleteMovies(movieId)
