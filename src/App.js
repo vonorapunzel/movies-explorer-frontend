@@ -161,7 +161,8 @@ function App() {
     const moviesArr = JSON.parse(localStorage.getItem('filterData'));
     if (moviesArr) {
       setMovies(moviesArr);
-    } else {
+    } 
+    else {
       getAllMovies()
     }
 
@@ -181,7 +182,12 @@ function App() {
     } else {
       setChecked(false);
       const moviesArr = JSON.parse(localStorage.getItem('filterData'));
-      setMovies(moviesArr); 
+      const movieArrAll = JSON.parse(localStorage.getItem('movies'));
+      if (moviesArr === null) {
+        setMovies(movieArrAll)
+      } else {
+        setMovies(moviesArr)
+      }
     }
   };
 
@@ -193,7 +199,12 @@ function App() {
     } else {
       setCheckedSave(false);
       const moviesArr = JSON.parse(localStorage.getItem('filterDataSave'));
-      setSavedMovies(moviesArr); 
+      const movieArrAll = JSON.parse(localStorage.getItem('savedMovies'));
+      if (moviesArr === null) {
+        setSavedMovies(movieArrAll)
+      } else {
+        setSavedMovies(moviesArr)
+      } 
     }
   };
   
