@@ -5,11 +5,6 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Preloader from "../Preloader/Preloader";
 
 const SavedMovies = ({ savedMovies, movies, isLoading, loadingError, checked, onSubmitSearch, filterBox, onActionClick, isMovieAdded }) => {
-  const [filterIsOn, setFilterIsOn] = useState(false);
-  
-  const onFilterClick = () => {
-    setFilterIsOn(!filterIsOn);
-  };
 
   const [moviesToRender, setMoviesToRender] = useState([]);
 
@@ -19,7 +14,7 @@ const SavedMovies = ({ savedMovies, movies, isLoading, loadingError, checked, on
 
   return(
     <>
-      <SearchForm onFilterClick={onFilterClick} onSearch={onSubmitSearch} checked={checked} filterBox={filterBox} />
+      <SearchForm onFilterClick={onSubmitSearch} onSearch={onSubmitSearch} checked={checked} filterBox={filterBox} />
       {isLoading && <Preloader />}
 
       {!isLoading

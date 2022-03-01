@@ -22,15 +22,17 @@ function App() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({ name: '', email: '' });
-  const [setFilterMovies] = useState([]);
+  const [filterMovies, setFilterMovies] = useState([]);
   const [editIsSuccess, setEditIsSuccess] = useState(false);
   const [editIsFailed, setEditIsFailed] = useState(false);
-  const [isLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [loadingError, setLoadingError] = useState('');
-  const [setFilterSavedMovies] = useState([]);
-  const [isSignUpError, setIsSignUpError] = useState(false);
+  const [filterSavedMovies, setFilterSavedMovies] = useState([]);
+  const [isSignError, setIsSignError] = useState(false);
+  const [isSignErrorLogin, setIsSignErrorLogin] = useState(false);
   const [checked, setChecked] = useState(false);
   const [checkedSave, setCheckedSave] = useState(false);
+  
 
   const getUser = () => {
     mainApi
@@ -46,8 +48,28 @@ function App() {
   };
 
   useEffect(() => {
-    getUser();
+    const moviesCheck = JSON.parse(localStorage.getItem('moviesCheck'));
+    const moviesAll = JSON.parse(localStorage.getItem('movies'));
+    setMovies(moviesAll);
+    if (moviesCheck) {
+      setChecked(true);
+      setMovies(moviesCheck);
+    }
   }, []);
+
+  useEffect(() => {
+    const moviesCheck = JSON.parse(localStorage.getItem('saveMoviesCheck'));
+    const moviesAll = JSON.parse(localStorage.getItem('savedMovies'));
+    setSavedMovies(moviesAll);
+    if (moviesCheck) {
+      setCheckedSave(true);
+      setSavedMovies(moviesCheck);
+    }
+  }, []);
+
+  useEffect(() => {
+    getUser()
+  }, [])
 
   const signInHandler = (email, password) => {
     mainApi
@@ -55,10 +77,12 @@ function App() {
       .then(() => {
         getAllMovies();
         getSavedMovies();
+        getUser();
         setLoggedIn(true);
         history.push('/movies');
       })
       .catch((err) => {
+        setIsSignErrorLogin(true)
         console.error(err);
       });
   };
@@ -70,7 +94,7 @@ function App() {
         signInHandler(email, password);
       })
       .catch((err) => {
-        setIsSignUpError(true)
+        setIsSignError(true)
         console.error(err);
       });
   }
@@ -84,10 +108,14 @@ function App() {
         setCurrentUser({});
         localStorage.removeItem('movies');
         localStorage.removeItem('savedMovies');
+        localStorage.removeItem('checkboxMovieSave');
+        localStorage.removeItem('checkboxMovie');
         setMovies([]);
         setSavedMovies([]);
         setFilterMovies([]);
         setFilterSavedMovies([]);
+        setChecked(false);
+        setCheckedSave(false);
         history.push('/');
       })
       .catch((e) => console.log(e));
@@ -129,7 +157,6 @@ function App() {
         setMovies(allMoviesData);
       })
       .catch(() => {
-        localStorage.removeItem('movies');
         setLoadingError('Во время запроса произошла ошибка. '
           + 'Возможно, проблема с соединением или сервер недоступен. '
           + 'Подождите немного и попробуйте ещё раз');
@@ -152,124 +179,100 @@ function App() {
       });
   }
 
-  useEffect(() => {
-    const checkboxMovie = JSON.parse(localStorage.getItem('checkboxMovie'))
-    const moviesArr = JSON.parse(localStorage.getItem('filterData'));
-    if (moviesArr) {
-      setMovies(moviesArr);
-    } 
-    if (checkboxMovie) {
-      setChecked(true);
-      setMovies(checkboxMovie)
-    } else {
-      getAllMovies()
-    }
-
-    const checkboxMovieSave = JSON.parse(localStorage.getItem('checkboxMovieSave'))
-    const saved = JSON.parse(localStorage.getItem('filterDataSave'));
-    if (saved) {
-      setSavedMovies(saved);
-    } 
-    if (checkboxMovieSave) {
-      setCheckedSave(true)
-      setSavedMovies(checkboxMovieSave);
-    } else {
-      getSavedMovies();
-    }
-  }, [history]);
-
-  const filterCheckBox = (e) => {
+  const filterCheckBox = () => {
     if(!checked) {
-      const filterShortFilm = movies.filter((item) => item.duration < 40);
       setChecked(true);
-      localStorage.setItem('checkboxMovie', JSON.stringify(filterShortFilm));
-      setMovies(filterShortFilm);
+      const movieList = JSON.parse(localStorage.getItem('movies')).filter((item) => item.duration < 40)
+      localStorage.setItem('moviesCheck', JSON.stringify(movieList));
+      setMovies(movieList);
     } else {
       setChecked(false);
-      localStorage.removeItem('checkboxMovie')
-      const moviesArr = JSON.parse(localStorage.getItem('filterData'));
-      const movieArrAll = JSON.parse(localStorage.getItem('movies'));
-      if (moviesArr === null) {
-        setMovies(movieArrAll)
-      } else {
-        setMovies(moviesArr)
+      //getAllMovies();
+      setMovies(JSON.parse(localStorage.getItem('movies')));
+      localStorage.removeItem('moviesCheck');
       }
     }
-  };
+  
 
-  const filterCheckBoxSave = (e) => {
+  const filterCheckBoxSave = () => {
     if(!checkedSave) {
-      const filterShortFilm = savedMovies.filter((item) => item.duration < 40);
       setCheckedSave(true);
-      localStorage.setItem('checkboxMovieSave', JSON.stringify(filterShortFilm));
+      const filterShortFilm = JSON.parse(localStorage.getItem('savedMovies')).filter((item) => item.duration < 40);
+      localStorage.setItem('saveMovieCheck', JSON.stringify(filterShortFilm));
       setSavedMovies(filterShortFilm);
     } else {
       setCheckedSave(false);
-      localStorage.removeItem('checkboxMovieSave')
-      const moviesArr = JSON.parse(localStorage.getItem('filterDataSave'));
-      const movieArrAll = JSON.parse(localStorage.getItem('savedMovies'));
-      if (moviesArr === null) {
-        setSavedMovies(movieArrAll)
-      } else {
-        setSavedMovies(moviesArr)
-      } 
+      getSavedMovies();
+      setMovies(JSON.parse(localStorage.getItem('savedMovies')));
+      localStorage.removeItem('saveMovieCheck')
     }
   };
   
   
   const isMovieAdded = (movie) => savedMovies.some((item) => item.id === movie.id);
 
+  const searchHandler = (searchQuery) => {
+    if (searchQuery === '') {
+    if(checked) {
+      const moviesArr = JSON.parse(localStorage.getItem('moviesCheck'));
+      setMovies(moviesArr);
+    } else {
+      getAllMovies();
+      setMovies(JSON.parse(localStorage.getItem('movies')));
+    }}
+    setIsLoading(true);
+    getAllMovies();
+    setTimeout(() => {
+      searchFilter(movies, searchQuery);
+      setIsLoading(false);
+    }, 1000);
+  };
+
   const searchFilter = (data, searchQuery) => {
     if (searchQuery) {
       const regex = new RegExp(searchQuery, 'gi');
       const filterData = data.filter((item) => regex.test(item.nameRU) || regex.test(item.nameEN));
+      localStorage.setItem('filterData', JSON.stringify(filterData));
+      localStorage.setItem('movies', JSON.stringify(filterData));
       if (filterData.length === 0) {
         setLoadingError('Ничего не найдено');
       } else {
-        setLoadingError('');
+        setLoadingError('')
+        const moviesArr = JSON.parse(localStorage.getItem('movies'));
+        setMovies(moviesArr);
       }
-      localStorage.setItem('filterData', JSON.stringify(filterData));
-      setMovies(filterData);
-    } else {
-      const movieArrAll = JSON.parse(localStorage.getItem('movies'));
-      setMovies(movieArrAll)
     }
+  };
+
+  const searchHandlerSave = (searchQuery) => {
+    if (searchQuery === '') {
+    if(checked) {
+      const moviesArr = JSON.parse(localStorage.getItem('saveMoviesCheck'));
+      setSavedMovies(moviesArr);
+    } else {
+      getSavedMovies();
+      setSavedMovies(JSON.parse(localStorage.getItem('savedMovies')));
+    }}
+    setIsLoading(true);
+    setTimeout(() => {
+      searchFilterSave(savedMovies, searchQuery);
+      setIsLoading(false);
+    }, 1000);
   };
 
   const searchFilterSave = (data, searchQuery) => {
     if (searchQuery) {
       const regex = new RegExp(searchQuery, 'gi');
       const filterData = data.filter((item) => regex.test(item.nameRU) || regex.test(item.nameEN));
+      localStorage.setItem('saveFilterData', JSON.stringify(filterData));
+      localStorage.setItem('savedMovies', JSON.stringify(filterData));
       if (filterData.length === 0) {
         setLoadingError('Ничего не найдено');
       } else {
-        setLoadingError('');
+        setLoadingError('')
+        const moviesArr = JSON.parse(localStorage.getItem('savedMovies'));
+        setSavedMovies(moviesArr);
       }
-      localStorage.setItem('filterDataSave', JSON.stringify(filterData));
-      setSavedMovies(filterData);
-    } else {
-      const movieArrAll = JSON.parse(localStorage.getItem('savedMovies'));
-      setSavedMovies(movieArrAll)
-    }
-  };
-
-  const searchHandlerSave = (searchQuery) => {
-    if (searchQuery === '') {
-      localStorage.removeItem('filterDataSave');
-      const moviesArr = JSON.parse(localStorage.getItem('savedMovies'));
-      setSavedMovies(moviesArr);
-    } else {
-      searchFilterSave(savedMovies, searchQuery);
-    }
-  };
-
-  const searchHandler = (searchQuery) => {
-    if (searchQuery === '') {
-      localStorage.removeItem('filterData')
-      const moviesArr = JSON.parse(localStorage.getItem('movies'));
-      setMovies(moviesArr);
-    } else {
-      searchFilter(movies, searchQuery);
     }
   };
 
@@ -277,7 +280,13 @@ function App() {
     mainApi
       .saveMovies(movie)
       .then((res) => {
-        setSavedMovies([...savedMovies, { ...res, id: res.movieId }]);
+        if(res.country != null) {
+          setSavedMovies([...savedMovies, { ...res, id: res.movieId }]);
+          getSavedMovies();
+        } else {
+          setSavedMovies([...savedMovies, {  ...res, id: res.movieId }]);
+          getSavedMovies();
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -285,7 +294,6 @@ function App() {
   };
 
   const removeMovie = (movie) => {
-    console.log(movie)
     const movieId = savedMovies.find((item) => item.id === movie.id)._id;
     mainApi
       .deleteMovies(movieId)
@@ -312,10 +320,10 @@ function App() {
           <Main />
         </Route>
         <Route path="/signin">
-          <Login signInHandler={signInHandler} />
+          <Login signInHandler={signInHandler} isSignErrorLogin={isSignErrorLogin} />
         </Route>
         <Route path="/signup">
-          <Register signUpHandler={signUpHandler} isSignUpError={isSignUpError} />
+          <Register signUpHandler={signUpHandler} isSignError={isSignError} />
         </Route>
         <ProtectedRoute path="/movies" checked={checked} filterBox={filterCheckBox} isLoading={isLoading} loadingError={loadingError} onActionClick={actionHandler} isMovieAdded={isMovieAdded} savedMovies={false} component={Movies} onSubmitSearch={searchHandler} movies={movies} loggedIn={loggedIn} />
         <ProtectedRoute path="/saved-movies" checked={checkedSave} filterBox={filterCheckBoxSave} onSubmitSearch={searchHandlerSave} isLoading={isLoading} loadingError={loadingError} savedMovies onActionClick={actionHandler} isMovieAdded={isMovieAdded} component={SavedMovies} loggedIn={loggedIn} movies={savedMovies}/>

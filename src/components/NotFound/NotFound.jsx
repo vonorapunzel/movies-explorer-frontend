@@ -4,7 +4,7 @@ import './NotFound.css';
 
 const NotFound = () => {
   const history = useHistory();
-  const goBackHandler = () => history.goBack();
+  const goBackHandler = () => history.push('/');
   
   return (
     <div className="not-found">

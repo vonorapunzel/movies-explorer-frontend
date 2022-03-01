@@ -1,10 +1,11 @@
 import "./SearchForm.css";
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import find from "../../images/find.svg";
 
 const SearchForm = ({ onSearch, onFilterClick, filterBox, checked, isLoading }) => {
   const [searchText, setSearchText] = useState('');
-
+  const history = useHistory();
   const handleSubmit = (e) => {
     e.preventDefault();
     onSearch(searchText);
@@ -18,7 +19,7 @@ const SearchForm = ({ onSearch, onFilterClick, filterBox, checked, isLoading }) 
   useEffect(() => {
     const text = localStorage.getItem('searchText');
     if(text) setSearchText(text);
-  }, []);
+  }, [history]);
 
 
   return(
