@@ -199,18 +199,24 @@ function App() {
   const isMovieAdded = (movie) => savedMovies.some((item) => item.id === movie.id);
 
   const searchHandler = (searchQuery) => {
+    setIsLoading(true);
+    setTimeout(() => {
     if (searchQuery === '') {
       if (checked) {
         const moviesArr = JSON.parse(localStorage.getItem('movies')).filter((item) => item.duration < 40);
         localStorage.setItem('filterDataCheck', JSON.stringify(moviesArr));
         setMovies(moviesArr);
+        setIsLoading(false);
+        console.log('kk')
       } else {
+        setLoadingError('')
         localStorage.removeItem('filterData');
         localStorage.removeItem('filterDataCheck');
+        getAllMovies();
         setMovies(JSON.parse(localStorage.getItem('movies')));
+        setIsLoading(false)
       }
     } else {
-      setIsLoading(true);
       getAllMovies();
       const newMovies = JSON.parse(localStorage.getItem('movies'))
       setTimeout(() => {
@@ -218,6 +224,7 @@ function App() {
         setIsLoading(false);
       }, 1000);
     }
+  }, 1000);
   };
 
   const searchFilter = (data, searchQuery) => {
@@ -248,18 +255,22 @@ function App() {
   };
 
   const searchHandlerSave = (searchQuery) => {
+    setIsLoading(true);
+    setTimeout(() => {
     if (searchQuery === '') {
       if (checkedSave) {
         const moviesArr = JSON.parse(localStorage.getItem('savedMovies')).filter((item) => item.duration < 40);
         localStorage.setItem('filterDataCheckSave', JSON.stringify(moviesArr));
         setSavedMovies(moviesArr);
+        setIsLoading(false);
       } else {
+        setLoadingError('')
         localStorage.removeItem('filterDataSave');
         localStorage.removeItem('filterDataCheckSave');
         setSavedMovies(JSON.parse(localStorage.getItem('savedMovies')));
+        setIsLoading(false);
       }
     } else {
-      setIsLoading(true);
       getSavedMovies();
       const newMovies = JSON.parse(localStorage.getItem('savedMovies'))
       setTimeout(() => {
@@ -267,6 +278,7 @@ function App() {
         setIsLoading(false);
       }, 1000);
     }
+  }, 1000);
   };
 
   const searchFilterSave = (data, searchQuery) => {
