@@ -6,7 +6,6 @@ import Preloader from '../Preloader/Preloader';
 
 const Movies = ({ savedMovies, movies, onSubmitSearch, isLoading, checked, filterBox, loadingError, onActionClick, isMovieAdded }) => {
   const [filterIsOn, setFilterIsOn] = useState(false);
-
   const onFilterClick = () => {
     setFilterIsOn(!filterIsOn);
   };

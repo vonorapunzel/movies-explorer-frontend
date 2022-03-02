@@ -17,7 +17,6 @@ class moviesApi {
       headers: this._headers,
     })
       .then(res => this._getResponseData(res))
-      .then(data => data)
   }
 }
 

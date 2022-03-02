@@ -19,7 +19,6 @@ class MainApi {
       headers: this._headers,
     })
       .then(res => this._getResponseData(res))
-      .then(data => data)
   }
 
   saveMovies(data) {
@@ -91,7 +90,6 @@ class MainApi {
       credentials: 'include',
     })
       .then((res) => this._getResponseData(res))
-      .then(data => data)
   }
 
   signOut() {

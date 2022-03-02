@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useLocation } from "react-router-dom"; 
 import "./MoviesCard.css";
 import ButtonMovies from '../ButtonMovies/ButtonMovies';
 import ButtonDeleteMovie from "../ButtonDeleteMovie/ButtonDeleteMovie";
