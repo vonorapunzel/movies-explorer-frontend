@@ -1,5 +1,6 @@
 .movies-card {
   position: relative;
+  height: 201px;
 }
 
 .movies-card-saved {
@@ -25,6 +26,7 @@
 
 .movies-card__img {
   border-radius: 6px;
+  max-width: 360px;
   width: 100%;
   height: 100%;
   cursor: pointer;
@@ -53,4 +55,16 @@
   font-size: 11px;
   line-height: 10px;
   color: #8B8B8B;
+}
+
+@media screen and (max-width: 768px) {
+  .movies-card {
+    height: 190px;
+  }
+}
+
+@media screen and (max-width:425px) {
+  .movies-card {
+    height: 168px;
+  }
 }

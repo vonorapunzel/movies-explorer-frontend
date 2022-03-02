@@ -1,20 +1,43 @@
+import { useState } from "react";
 import "./Form.css";
-import logo from "../../images/logo.svg";
-import { Link } from "react-router-dom";
 
-const Form = ({ title, name, inputName, entrance, question, link, subquestion }) => {
+const Form = ({ FormTypeLogin, signUpHandler }) => {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    signUpHandler(name, email, password);
+  };
+
+  const handleChangeName = (e) => {
+    setName(e.target.value);
+  }
+
+  const handleChangeEmail = (e) => {
+    setEmail(e.target.value);
+  }
+
+  const handleChangePassword = (e) => {
+    setPassword(e.target.value);
+  }
+
   return(
-    <form className="entrance-form" autoComplete="off">
-      <Link className="entrance-form__logo" to="/" ><img className="logo" src={logo} alt="Логотип" /></Link>
-      <h2 className="entrance-form__title">{title}</h2>
-      <p className={`entrance-form__subtitle ${name}`}>Имя</p>
-      <input className={`entrance-form__input entrance-form__input_margin ${inputName}`} required maxLength={30} minLength={2} name="name" placeholder="Имя" type="text"/>
-      <p className="entrance-form__subtitle">E-mail</p>
-      <input className="entrance-form__input entrance-form__input_margin" required name="email" placeholder="Email" type="email"/>
-      <p className="entrance-form__subtitle">Пароль</p>
-      <input className="entrance-form__input" name="password"required minLength={8} placeholder="Пароль" type="password"/>
-      <button className="entrance-form__button-submit" type="submit">{entrance}</button> 
-      <p className={`entrance-form__question`}>{question}<Link to={link} className="entrance-form__enter"> {subquestion}</Link></p>
+    <form className="entrance-form" autoComplete="off" onSubmit={submitHandler}>
+      {!FormTypeLogin && (
+      <label className="entrance-form__subtitle">Имя
+        <input className='entrance-form__input entrance-form__input_margin' onChange={handleChangeName} value={name} required maxLength={30} minLength={2} name="name" placeholder="Имя" type="text"/>
+      </label>
+      )}
+      <label className="entrance-form__subtitle">E-mail
+        <input className="entrance-form__input entrance-form__input_margin" onChange={handleChangeEmail} value={email} required name="email" placeholder="Email" type="email"/>
+      </label>
+      <label className="entrance-form__subtitle">Пароль
+        <input className="entrance-form__input" name="password" onChange={handleChangePassword} value={password} required minLength={8} placeholder="Пароль" type="password"/>
+      </label>
+      <button className="entrance-form__button-submit" type="submit">Регистрация</button>
     </form>
   ); 
 };

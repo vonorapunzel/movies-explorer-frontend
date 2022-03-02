@@ -17,6 +17,19 @@
   transition: all .3s ease-out;
 }
 
+.button-movies-added {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 21px;
+  height: 21px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  background: transparent;
+  background-image: url(../../images/saved.svg);
+}
+
 .button-movies:hover {
   background-color: #4285F4;
   transition: all .3s ease-out;
@@ -24,4 +37,8 @@
 
 .button-movies:focus {
   outline: none;
+}
+
+.button-movies_added {
+  background-image: url(../../images/saved.svg);
 }

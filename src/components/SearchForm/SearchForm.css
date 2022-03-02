@@ -36,10 +36,6 @@
   margin-left: 22px;
 }
 
-.searchForm__input:focus {
-  border: 1px solid red;
-}
-
 .searchForm__input::placeholder {
   font-size: 14px;
   line-height: 18px;
@@ -83,7 +79,6 @@
   display: inline-block;
   width: 34px;
   height: 14px;
-  z-index: -1;
 }
 
 .searchForm__checkbox {display:none;}
@@ -150,6 +145,17 @@
   .searchForm__subtitle {
     margin-left: 0;
   }
+}
+
+.search-form__error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.28;
+  color: #EE3465;
 }
 
 @media screen and (max-width: 425px) {
